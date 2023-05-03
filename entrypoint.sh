@@ -24,7 +24,7 @@ echo "Git email: $(git config --get user.email)"
 
 PIP_CMD=('pip' 'install')
 if [[ $INPUT_COMMITIZEN_VERSION == 'latest' ]]; then
-  PIP_CMD+=('commitizen')
+  PIP_CMD+=('git+https://github.com/audricschiltknecht/commitizen.git@bump-no-git-output')
 else
   PIP_CMD+=("commitizen==${INPUT_COMMITIZEN_VERSION}")
 fi
@@ -64,6 +64,9 @@ if [[ $INPUT_INCREMENT ]]; then
 fi
 if [[ $INPUT_CHECK_CONSISTENCY ]]; then
   CZ_CMD+=('--check-consistency')
+fi
+if [[ $INPUT_GIT_HIDE_OUTPUT == 'true' ]]; then
+  CZ_CMD+=('--git-output-to-stderr')
 fi
 if [[ $INPUT_CHANGELOG_INCREMENT_FILENAME ]]; then
   CZ_CMD+=('--changelog-to-stdout')
